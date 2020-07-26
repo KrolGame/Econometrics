@@ -6,13 +6,9 @@ function addtr(){
 	var inputs = document.getElementsByTagName("input");
 	var inputx = document.getElementById("x");
 	var inputy = document.getElementById("y");
-	var x = inputs.length / 2;
-	for(var i = x; inputx.id == 'x'; ){
-		inputx.id = "x-"+i;
-	}
-	for(var i = x; inputy.id == 'y'; ){
-		inputy.id = "y-"+i;
-	}
+	var n = inputs.length / 2;
+	inputx.id = "x-"+n;
+	inputy.id = "y-"+n;
 }
 
 //Удаление инпутов по кнопке x
@@ -29,101 +25,96 @@ function calc(){
 	if(selectValue == 0){
 		calc_line();
 	}
-}
 
-//Расчет линейного тренда
-function calc_line(){
-	inpx = document.getElementsByClassName('x'),
-	masx = [];
-	inpy = document.getElementsByClassName('y'),
-	masy = [];
-	arrayx();
-	arrayy();
-	mnk_lin();
+	//Расчет линейного тренда
+	function calc_line(){
+		inpx = document.getElementsByClassName('x');
+		arrx = [];
+		inpy = document.getElementsByClassName('y');
+		arry = [];
+		fun_arrx();
+		fun_arry();
 
-	function arrayx() {
-		for (var i = 0; i < inpx.length; i++) {
-			masx[i] = inpx[i].value;
-		}
-	return masx;
-	}
-
-	function arrayy() {
-		for (var i = 0; i < inpy.length; i++) {
-			masy[i] = inpy[i].value;
-		}
-	return masy;
-	}
-
-	function arraySumx(){
-		var arr = masx;
-		var sumx = 0;
-			for(var i = 0; i<arr.length; i++){
-				sumx += parseFloat(arr[i]);
+		//Записываем массив иксов из инпутов с классов x
+		function fun_arrx() {
+			for (var i = 0; i < inpx.length; i++){
+				arrx[i] = inpx[i].value;
 			}
-	return sumx;
-	}
+		return arrx;
+		}
 
-	function arraySumy(){
-		var arr = masy;
-		var sumy = 0;
-			for(var i = 0; i<arr.length; i++){
-				sumy += parseFloat(arr[i]);
+		//Записываем массив игреков из инпутов с классов y
+		function fun_arry() {
+			for (var i = 0; i < inpy.length; i++){
+				arry[i] = inpy[i].value;
 			}
-	return sumy;
-	}
+		return arry;
+		}
 
-	function summ_multixy(){
-		var arrx = masx;
-		var arry = masy;
-		var sum_multixy = 0;
+		//Суммируем все значения из массива иксов
+		function fun_sum_arrx(){
+			var sumx = 0;
+			for(var i = 0; i<arrx.length; i++){
+				sumx += parseFloat(arrx[i]);
+			}
+		return sumx;
+		}
+
+		//Суммируем все значения из массива игреков
+		function fun_sum_arry(){
+			var sumy = 0;
+			for(var i = 0; i<arry.length; i++){
+				sumy += parseFloat(arry[i]);
+			}
+		return sumy;
+		}
+
+		//Суммируем все значения Xi * Yi
+		function fun_sum_multixy(){
+			var sum_multixy = 0;
 			for(var i = 0; i<arrx.length; i++){
 				sum_multixy += (parseFloat(arrx[i]) * parseFloat(arry[i]));
 			}
-	return sum_multixy;
-	}
-
-	function arr_Multixy(){
-	var arrx = masx;
-	var arry = masy;
-	var arr_multixy = [];
-		for(var i = 0; i<arrx.length; i++){
-			arr_multixy[i] = (parseFloat(arrx[i]) * parseFloat(arry[i])).toFixed(4);
+		return sum_multixy;
 		}
-	return arr_multixy;
-	}
 
-	function arr_sum_Powx(){
-		var arr = masx;
-		var powx = 0;
-			for(var i = 0; i<arr.length; i++){
-				powx += parseFloat(arr[i]**2);
+		//Записываем массив значений Xi * Yi
+		function fun_arr_multixy(){
+			var arr_multixy = [];
+			for(var i = 0; i<arrx.length; i++){
+				arr_multixy[i] = (parseFloat(arrx[i]) * parseFloat(arry[i])).toFixed(4);
 			}
-	return powx;
-	}
-
-	function arr_Powx(){
-	var arr = masx;
-	var arr_powx = [];
-	var powx = 0;
-		for(var i = 0; i<arr.length; i++){
-			arr_powx[i] = parseFloat(arr[i]**2);
+		return arr_multixy;
 		}
-	return arr_powx;
-	}
 
-	function mnk_lin(){
+		//Сумма всех иксов во 2 степени
+		function fun_sum_arr_powx(){
+			var powx = 0;
+			for(var i = 0; i<arrx.length; i++){
+				powx += parseFloat(arrx[i]**2);
+			}
+		return powx;
+		}
+
+		//Записываем массив значений иксов во 2 степени
+		function fun_arr_powx(){
+			var arr_powx = [];
+			var powx = 0;
+			for(var i = 0; i<arrx.length; i++){
+				arr_powx[i] = parseFloat(arrx[i]**2);
+			}
+		return arr_powx;
+		}
+
 		var inputs = document.getElementsByTagName("input").length;
 		var n = inputs / 2;
-		var sumx = arraySumx();
-		var sumy = arraySumy();
+		var sumx = fun_sum_arrx();
+		var sumy = fun_sum_arry();
 		var midy = (sumy / n).toFixed(4);
-		var sumpowx = arr_sum_Powx();
-		var sum_multixy = summ_multixy();
+		var sumpowx = fun_sum_arr_powx();
+		var sum_multixy = fun_sum_multixy();
 		var b = (sum_multixy - (sumx * sumy / n)) / (sumpowx - (sumx * sumx / n));
 		var a = (sumy - (sumx * b)) / n;
-		var arrx = masx;
-		var arry = masy;
 		var arrmody = [];
 			for(var i = 0; i<arrx.length; i++){
 				arrmody[i] = (parseInt(arrx[i]) * b + a).toFixed(4);
@@ -157,39 +148,23 @@ function calc_line(){
 				err_apr += Math.abs((parseFloat(arry[i]) - parseFloat(arrmody[i])) / parseFloat(arry[i]));
 			}
 		var err_apr = ((1 / n) * err_apr * 100).toFixed(4);
-		
-		/* Проверка
-		console.log(sumx);
-		console.log(sumy);
-		console.log(sumpowx);
-		console.log(sum_multixy);
-		console.log(b);
-		console.log(a);
-		console.log(arrmody);
-		console.log(midy);
-		console.log(sum_midy_minus_mody_pow);
-		console.log(sum_y_minus_midy_pow);
-		console.log(correl);
-		console.log(deter);
-		console.log(fisher);
-		console.log(fisher_tabl);
-		console.log(err_apr); */
 
 		//Генерация html
+		var generate_x = 0;
+		var generate_y = 0;
+		var arr_powx = fun_arr_powx();
+		var generate_powx = 0;
+		var generate_multixy = 0;
+		var arr_multixy = fun_arr_multixy();
+		var generate_mody = 0;
+		var generate_midy_minus_mody_pow = 0;
+		var generate_y_minus_midy_pow = 0;
+
 		var div1 = ['<div>'];
 		div1.push('<h2>Решение</h2><h3>Линейное уравнение регрессии имеет вид: <br><br> y = b * x + a</h3> <h3>Находим параметры уравнения (a и b) методом наименьших квадратов(МНК)<br><br>Система уравнений МНК:<br><br>a * n + b * ∑X = ∑Y<br>a * ∑X + b * ∑X^2 = ∑(X * Y)</h3> <h3>Для решения системы уравнений построим и сосчитаем значения таблицы 1:</h3>');
 		div1.push('</div>');
 		document.getElementById('generate1').innerHTML=div1.join('\n')
 
-		var generate_x = 0;
-		var generate_y = 0;
-		var arr_powx = arr_Powx();
-		var generate_powx = 0;
-		var generate_multixy = 0;
-		var arr_multixy = arr_Multixy();
-		var generate_mody = 0;
-		var generate_midy_minus_mody_pow = 0;
-		var generate_y_minus_midy_pow = 0;
 		var tableArr1 = ['<table class="generate-table"><h4>Таблица 1<h4>'];
 		tableArr1.push('<tr> <td> </td> <td>X</td> <td>Y</td> <td>X^2</td> <td>X * Y</td> </tr>');
 			for (i = 0; i < n; i++){
