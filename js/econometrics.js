@@ -1,7 +1,7 @@
 //Добавление инпутов по кнопке +
 function addtr(){
 	var row = document.createElement("tr");
-	row.innerHTML = "<td> <input type='text' id='x' class='x'> </td><td> <input type='text' id='y' class='y'> </td>";
+	row.innerHTML = "<td> <input type='number' id='x' class='x'> </td><td> <input type='number' id='y' class='y'> </td>";
 	document.getElementById("tbody").appendChild(row);
 	var inputs = document.getElementsByTagName("input");
 	var inputx = document.getElementById("x");
