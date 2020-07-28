@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="FaviconAnimeKG.png" type="image/x-png"/>
 	<link rel="shortcut icon" href="FaviconAnimeKG.png" type="image/x-png"/>
-	<link rel="stylesheet" type="text/css" href="css/econometrics.css?v=1.2">
+	<link rel="stylesheet" type="text/css" href="css/econometrics.css?v=1.3">
 </head>
 <body>
 	<main>
@@ -19,26 +19,26 @@
 				</tr>
 				<tr>
 					<td>
-						<input type="number" id="x-1" class="x">
+						<input type="number" class="x">
 					</td>
 					<td>
-						<input type="number" id="y-1" class="y">
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<input type="number" id="x-2" class="x">
-					</td>
-					<td>
-						<input type="number" id="y-2" class="y">
+						<input type="number" class="y">
 					</td>
 				</tr>
 				<tr>
 					<td>
-						<input type="number" id="x-3" class="x">
+						<input type="number" class="x">
 					</td>
 					<td>
-						<input type="number" id="y-3" class="y">
+						<input type="number" class="y">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="number" class="x">
+					</td>
+					<td>
+						<input type="number" class="y">
 					</td>
 				</tr>
 			</tbody>
@@ -50,10 +50,10 @@
 		<div class="select-trend">
 			<h2 tabindex="0">Выберите вид тренда</h2>
 			<select id="select">
-				<option value="0">Линейный y = b * x + a</option>
+				<option value="0">Линейный y = a + (b * x)</option>
 				<option value="1">Степенной y = a * x^b</option>
-				<option value="2">Парабола y = a + b * x + c * x^2</option>
-				<option value="3">Гипербола y = a + b / x</option>
+				<option value="2">Параболический  y = a + (b * x) + (c * x^2)</option>
+				<option value="3">Гиперболический y = a + (b / x)</option>
 			</select>
 		</div>
 		<div class="calc">
