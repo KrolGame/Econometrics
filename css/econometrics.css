@@ -1,7 +1,8 @@
 html{width: 100%;}
 body{width: 100%; background-color: #383838; margin: 0;}
 main{width: 100%; display: table; margin: auto; padding: 0px 4px 20px 4px;}
-table{margin:auto; border-spacing: 4px;}
+table{margin:auto;}
+#table{border-spacing: 4px;}
 input{text-align: center; height: 29px; width: 122px; font-size: 18px;}
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {-webkit-appearance: none;-moz-appearance: none;appearance: none;margin: 0;}
 input[type=number]{-moz-appearance: textfield;}
