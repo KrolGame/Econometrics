@@ -18,7 +18,7 @@ function calc(){
 	var selectValue = document.getElementById('select').options.selectedIndex;
 
 	//Получение выбронной степени округления чисел через селект
-	var selectRound = document.getElementById('select-round').options.selectedIndex;
+	var selectRound = document.getElementById('select-round').value;;
 
 	inpx = document.getElementsByClassName('x');
 	arrx = fun_arrx();
