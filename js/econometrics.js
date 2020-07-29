@@ -17,6 +17,9 @@ function calc(){
 	//Получение выбронного тренда через селект
 	var selectValue = document.getElementById('select').options.selectedIndex;
 
+	//Получение выбронной степени округления чисел через селект
+	var selectRound = document.getElementById('select-round').options.selectedIndex;
+
 	inpx = document.getElementsByClassName('x');
 	arrx = fun_arrx();
 	inpy = document.getElementsByClassName('y');
@@ -27,7 +30,7 @@ function calc(){
 	function fun_arrx(){
 		var arrx = [];
 		for (i = 0; i < inpx.length; i++){
-			arrx[i] = inpx[i].value;
+			arrx[i] = parseFloat(parseFloat(inpx[i].value).toFixed(selectRound));
 		}
 	return arrx;
 	}
@@ -36,7 +39,7 @@ function calc(){
 	function fun_arry(){
 		var arry = [];
 		for (i = 0; i < inpy.length; i++){
-			arry[i] = inpy[i].value;
+			arry[i] = parseFloat(parseFloat(inpy[i].value).toFixed(selectRound));
 		}
 	return arry;
 	}
@@ -80,6 +83,15 @@ function calc(){
 	return sumy;
 	}
 
+	//Записываем массив значений иксов во 2 степени
+	function fun_arr_pow2x(){
+		var arr_pow2x = [];
+		for(i = 0; i<arrx.length; i++){
+			arr_pow2x[i] = parseFloat(parseFloat(arrx[i]**2).toFixed(selectRound));
+		}
+	return arr_pow2x;
+	}
+
 	//Сумма всех иксов во 2 степени
 	function fun_sum_arr_pow2x(){
 		var pow2x = 0;
@@ -89,20 +101,11 @@ function calc(){
 	return pow2x;
 	}
 
-	//Записываем массив значений иксов во 2 степени
-	function fun_arr_pow2x(){
-		var arr_pow2x = [];
-		for(i = 0; i<arrx.length; i++){
-			arr_pow2x[i] = parseFloat(arrx[i]**2);
-		}
-	return arr_pow2x;
-	}
-
 	//Записываем массив значений иксов в 3 степени
 	function fun_arr_pow3x(){
 		var arr_pow3x = [];
 		for(i = 0; i<arrx.length; i++){
-			arr_pow3x[i] = parseFloat(parseFloat(arrx[i]**3).toFixed(4));
+			arr_pow3x[i] = parseFloat(parseFloat(arrx[i]**3).toFixed(selectRound));
 		}
 	return arr_pow3x;
 	}
@@ -120,7 +123,7 @@ function calc(){
 	function fun_arr_pow4x(){
 		var arr_pow4x = [];
 		for(i = 0; i<arrx.length; i++){
-			arr_pow4x[i] = parseFloat(parseFloat(arrx[i]**4).toFixed(4));
+			arr_pow4x[i] = parseFloat(parseFloat(arrx[i]**4).toFixed(selectRound));
 		}
 	return arr_pow4x;
 	}
@@ -138,7 +141,7 @@ function calc(){
 	function fun_arr_multi_x_y(){
 		var arr_multi_x_y = [];
 		for(i = 0; i<arrx.length; i++){
-			arr_multi_x_y[i] = parseFloat((parseFloat(arrx[i]) * parseFloat(arry[i])).toFixed(4));
+			arr_multi_x_y[i] = parseFloat((parseFloat(arrx[i]) * parseFloat(arry[i])).toFixed(selectRound));
 		}
 	return arr_multi_x_y;
 	}
@@ -156,7 +159,7 @@ function calc(){
 	function fun_arr_multi_pow2x_y(){
 		var arr_multi_pow2x_y = [];
 		for(i = 0; i<arrx.length; i++){
-			arr_multi_pow2x_y[i] = parseFloat((parseFloat(arr_pow2x[i]) * parseFloat(arry[i])).toFixed(4));
+			arr_multi_pow2x_y[i] = parseFloat((parseFloat(arr_pow2x[i]) * parseFloat(arry[i])).toFixed(selectRound));
 		}
 	return arr_multi_pow2x_y;
 	}
@@ -174,7 +177,7 @@ function calc(){
 	function fun_arrlnx(){
 		var arrlnx = [];
 		for (i = 0; i < arrx.length; i++){
-			arrlnx[i] = parseFloat((Math.log(parseFloat(arrx[i]))).toFixed(4));
+			arrlnx[i] = parseFloat((Math.log(parseFloat(arrx[i]))).toFixed(selectRound));
 		}
 	return arrlnx;
 	}
@@ -192,7 +195,7 @@ function calc(){
 	function fun_arrlny(){
 		var arrlny = [];
 		for (i = 0; i < arry.length; i++){
-			arrlny[i] = parseFloat((Math.log(parseFloat(arry[i]))).toFixed(4));
+			arrlny[i] = parseFloat((Math.log(parseFloat(arry[i]))).toFixed(selectRound));
 		}
 	return arrlny;
 	}
@@ -210,7 +213,7 @@ function calc(){
 	function fun_arr_powlnx(){
 		var arr_powlnx = [];
 		for(i = 0; i<arrlnx.length; i++){
-			arr_powlnx[i] = parseFloat((parseFloat(arrlnx[i]**2)).toFixed(4));
+			arr_powlnx[i] = parseFloat((parseFloat(arrlnx[i]**2)).toFixed(selectRound));
 		}
 	return arr_powlnx;
 	}
@@ -228,7 +231,7 @@ function calc(){
 	function fun_arr_multi_lnx_lny(){
 		var arr_multi_lnx_lny = [];
 		for(i = 0; i<arrlnx.length; i++){
-			arr_multi_lnx_lny[i] = parseFloat((parseFloat(arrlnx[i]) * parseFloat(arrlny[i])).toFixed(4));
+			arr_multi_lnx_lny[i] = parseFloat((parseFloat(arrlnx[i]) * parseFloat(arrlny[i])).toFixed(selectRound));
 		}
 	return arr_multi_lnx_lny;
 	}
@@ -246,7 +249,7 @@ function calc(){
 	function fun_arr_divis_x(){
 		var arr_divis_x = [];
 		for(i = 0; i<arrx.length; i++){
-			arr_divis_x[i] = parseFloat((1 / arrx[i]).toFixed(4));
+			arr_divis_x[i] = parseFloat((1 / arrx[i]).toFixed(selectRound));
 		}
 	return arr_divis_x;
 	}
@@ -264,7 +267,7 @@ function calc(){
 	function fun_arr_divis_pow2x(){
 		var arr_divis_pow2x = [];
 		for(i = 0; i<arrx.length; i++){
-			arr_divis_pow2x[i] = parseFloat((1 / arrx[i]**2).toFixed(4));
+			arr_divis_pow2x[i] = parseFloat((1 / arrx[i]**2).toFixed(selectRound));
 		}
 	return arr_divis_pow2x;
 	}
@@ -282,7 +285,7 @@ function calc(){
 	function fun_arr_divis_y_x(){
 		var arr_divis_y_x = [];
 		for(i = 0; i<arrx.length; i++){
-			arr_divis_y_x[i] = parseFloat((arry[i] / arrx[i]).toFixed(4));
+			arr_divis_y_x[i] = parseFloat((arry[i] / arrx[i]).toFixed(selectRound));
 		}
 	return arr_divis_y_x;
 	}
@@ -302,65 +305,65 @@ function calc(){
 		//Общие значения
 		var inputs = document.getElementsByTagName("input").length;
 		var n = inputs / 2;
-		var sumx = fun_sum_arrx();
-		var sumy = fun_sum_arry();
-		var midy = parseFloat((sumy / n).toFixed(4));
+		var sumx = parseFloat(fun_sum_arrx().toFixed(selectRound));
+		var sumy = parseFloat(fun_sum_arry().toFixed(selectRound));
+		var midy = parseFloat((sumy / n).toFixed(selectRound));
 
 		//Расчет значений для линейного тренда
 		if(selectValue == 0){
 			var arr_pow2x = fun_arr_pow2x();
-			var sum_pow2x = fun_sum_arr_pow2x();
+			var sum_pow2x = parseFloat(fun_sum_arr_pow2x().toFixed(selectRound));
 			var arr_multi_x_y = fun_arr_multi_x_y();
-			var sum_multi_x_y = fun_sum_multi_x_y();
+			var sum_multi_x_y = parseFloat(fun_sum_multi_x_y().toFixed(selectRound));
 		}
 
 		//Расчет значений для степенного тренда
 		if(selectValue == 1){
 			var arrlnx = fun_arrlnx();
-			var sumlnx = parseFloat((fun_sum_arrlnx()).toFixed(4));
+			var sumlnx = parseFloat((fun_sum_arrlnx()).toFixed(selectRound));
 			var arrlny = fun_arrlny();
-			var sumlny = parseFloat((fun_sum_arrlny()).toFixed(4));
+			var sumlny = parseFloat((fun_sum_arrlny()).toFixed(selectRound));
 			var arr_powlnx = fun_arr_powlnx();
-			var sumpowlnx = parseFloat((fun_sum_arr_powlnx()).toFixed(4));
+			var sumpowlnx = parseFloat((fun_sum_arr_powlnx()).toFixed(selectRound));
 			var arr_multi_lnx_lny = fun_arr_multi_lnx_lny();
-			var sum_multi_lnx_lny = parseFloat((fun_sum_multi_lnx_lny()).toFixed(4));
+			var sum_multi_lnx_lny = parseFloat((fun_sum_multi_lnx_lny()).toFixed(selectRound));
 		}
 
 		//Расчет значений для параболического тренда
 		if(selectValue == 2){
 			var arr_pow2x = fun_arr_pow2x();
-			var sumpow2x = parseFloat((fun_sum_arr_pow2x()).toFixed(4));
+			var sumpow2x = parseFloat((fun_sum_arr_pow2x()).toFixed(selectRound));
 			var arr_pow3x = fun_arr_pow3x();
-			var sumpow3x = parseFloat((fun_sum_arr_pow3x()).toFixed(4));
+			var sumpow3x = parseFloat((fun_sum_arr_pow3x()).toFixed(selectRound));
 			var arr_pow4x = fun_arr_pow4x();
-			var sumpow4x = parseFloat((fun_sum_arr_pow4x()).toFixed(4));
+			var sumpow4x = parseFloat((fun_sum_arr_pow4x()).toFixed(selectRound));
 			var arr_multi_x_y = fun_arr_multi_x_y();
-			var sum_multi_x_y = parseFloat((fun_sum_multi_x_y()).toFixed(4));
+			var sum_multi_x_y = parseFloat((fun_sum_multi_x_y()).toFixed(selectRound));
 			var arr_multi_pow2x_y = fun_arr_multi_pow2x_y();
-			var sum_multi_pow2x_y = parseFloat((fun_sum_multi_pow2x_y()).toFixed(4));
+			var sum_multi_pow2x_y = parseFloat((fun_sum_multi_pow2x_y()).toFixed(selectRound));
 		}
 
 		//Расчет значений для гиперболического тренда
 		if(selectValue == 3){
 			var arr_divis_x = fun_arr_divis_x();
-			var sum_divis_x = parseFloat((fun_sum_divis_x()).toFixed(4));
+			var sum_divis_x = parseFloat((fun_sum_divis_x()).toFixed(selectRound));
 			var arr_divis_pow2x = fun_arr_divis_pow2x();
-			var sum_divis_pow2x = parseFloat((fun_sum_divis_pow2x()).toFixed(4));
+			var sum_divis_pow2x = parseFloat((fun_sum_divis_pow2x()).toFixed(selectRound));
 			var arr_divis_y_x = fun_arr_divis_y_x();
-			var sum_divis_y_x = parseFloat((fun_sum_divis_y_x()).toFixed(4));
+			var sum_divis_y_x = parseFloat((fun_sum_divis_y_x()).toFixed(selectRound));
 		}
 
 		//Нахождение a и b для линейного тренда
 		if(selectValue == 0){
-			var b = parseFloat(((sum_multi_x_y - (sumx * sumy / n)) / (sum_pow2x - (sumx * sumx / n))).toFixed(4));
-			var a = parseFloat(((sumy - (sumx * b)) / n).toFixed(4));
+			var b = parseFloat(((sum_multi_x_y - (sumx * sumy / n)) / (sum_pow2x - (sumx * sumx / n))).toFixed(selectRound));
+			var a = parseFloat(((sumy - (sumx * b)) / n).toFixed(selectRound));
 		}
 
 		//Нахождение a и b для степенного тренда
 		if(selectValue == 1){
-			var b = parseFloat(((sum_multi_lnx_lny - (sumlnx * sumlny / n)) / (sumpowlnx - (sumlnx * sumlnx / n))).toFixed(4));
-			var a = parseFloat(((sumlny - (sumlnx * b)) / n).toFixed(4));
-			var a_exp = parseFloat((Math.exp(a)).toFixed(4));
+			var b = parseFloat(((sum_multi_lnx_lny - (sumlnx * sumlny / n)) / (sumpowlnx - (sumlnx * sumlnx / n))).toFixed(selectRound));
+			var a = parseFloat(((sumlny - (sumlnx * b)) / n).toFixed(selectRound));
+			var a_exp = parseFloat((Math.exp(a)).toFixed(selectRound));
 		}
 
 		//Нахождение a, b, c для параболического тренда
@@ -369,15 +372,15 @@ function calc(){
 			var da = parseFloat((sumy * sumpow2x * sumpow4x) + (sumx * sumpow3x * sum_multi_pow2x_y) + (sumpow2x * sum_multi_x_y * sumpow3x) - (sum_multi_pow2x_y * sumpow2x * sumpow2x) - (sumpow3x * sumpow3x * sumy) - (sumpow4x * sum_multi_x_y * sumx));
 			var db = parseFloat((n * sum_multi_x_y * sumpow4x) + (sumy * sumpow3x * sumpow2x) + (sumpow2x * sumx * sum_multi_pow2x_y) - (sumpow2x * sum_multi_x_y * sumpow2x) - (sum_multi_pow2x_y * sumpow3x * n) - (sumpow4x * sumx * sumy));
 			var dc = parseFloat((n * sumpow2x * sum_multi_pow2x_y) + (sumx * sum_multi_x_y * sumpow2x) + (sumy * sumx * sumpow3x) - (sumpow2x * sumpow2x * sumy) - (sumpow3x * sum_multi_x_y * n) - (sum_multi_pow2x_y * sumx * sumx));
-			var a = parseFloat((da / d).toFixed(4));
-			var b = parseFloat((db / d).toFixed(4));
-			var c = parseFloat((dc / d).toFixed(4));
+			var a = parseFloat((da / d).toFixed(selectRound));
+			var b = parseFloat((db / d).toFixed(selectRound));
+			var c = parseFloat((dc / d).toFixed(selectRound));
 		}
 
 		//Нахождение a и b для гиперболического тренда
 		if(selectValue == 3){
-			var b = parseFloat(((sum_divis_y_x - (sum_divis_x * sumy / n)) / (sum_divis_pow2x - (sum_divis_x * sum_divis_x / n))).toFixed(4));
-			var a = parseFloat(((sumy - (sum_divis_x * b)) / n).toFixed(4));
+			var b = parseFloat(((sum_divis_y_x - (sum_divis_x * sumy / n)) / (sum_divis_pow2x - (sum_divis_x * sum_divis_x / n))).toFixed(selectRound));
+			var a = parseFloat(((sumy - (sum_divis_x * b)) / n).toFixed(selectRound));
 		}
 
 		var arrmody = [];
@@ -385,28 +388,28 @@ function calc(){
 		//Расчет и запись значений Ymod для линейного тренда
 		if(selectValue == 0){
 			for(i = 0; i<arrx.length; i++){
-				arrmody[i] = parseFloat((parseFloat(arrx[i]) * b + a).toFixed(4));
+				arrmody[i] = parseFloat((parseFloat(arrx[i]) * b + a).toFixed(selectRound));
 			}
 		}
 
 		//Расчет и запись значений Ymod для степенного тренда
 		if(selectValue == 1){
 			for(i = 0; i<arrx.length; i++){
-				arrmody[i] = parseFloat((a_exp * parseFloat(arrx[i])**b).toFixed(4));
+				arrmody[i] = parseFloat((a_exp * parseFloat(arrx[i])**b).toFixed(selectRound));
 			}
 		}
 
 		//Расчет и запись значений Ymod для параболического тренда
 		if(selectValue == 2){
 			for(i = 0; i<arrx.length; i++){
-				arrmody[i] = parseFloat((a + b * parseFloat(arrx[i]) + c * parseFloat(arr_pow2x[i])).toFixed(4));
+				arrmody[i] = parseFloat((a + b * parseFloat(arrx[i]) + c * parseFloat(arr_pow2x[i])).toFixed(selectRound));
 			}
 		}
 
 		//Расчет и запись значений Ymod для гиперболического тренда
 		if(selectValue == 3){
 			for(i = 0; i<arrx.length; i++){
-				arrmody[i] = parseFloat((a + (b / parseFloat(arrx[i]))).toFixed(4));
+				arrmody[i] = parseFloat((a + (b / parseFloat(arrx[i]))).toFixed(selectRound));
 			}
 		}
 
@@ -415,18 +418,18 @@ function calc(){
 			var arr_midy_minus_mody_pow = [];
 			var sum_midy_minus_mody_pow = 0;
 				for(i = 0; i<arrmody.length; i++){
-					arr_midy_minus_mody_pow[i] = parseFloat(((midy - parseFloat(arrmody[i]))**2).toFixed(4));
+					arr_midy_minus_mody_pow[i] = parseFloat(((midy - parseFloat(arrmody[i]))**2).toFixed(selectRound));
 					sum_midy_minus_mody_pow += ((midy - parseFloat(arrmody[i]))**2);
 				}
 			var arr_y_minus_midy_pow = [];
 			var sum_y_minus_midy_pow = 0;
 				for(i = 0; i<arry.length; i++){
-					arr_y_minus_midy_pow[i] = parseFloat(((parseFloat(arry[i]) - midy)**2).toFixed(4));
+					arr_y_minus_midy_pow[i] = parseFloat(((parseFloat(arry[i]) - midy)**2).toFixed(selectRound));
 					sum_y_minus_midy_pow += ((parseFloat(arry[i]) - midy)**2);
 				}
-			sum_midy_minus_mody_pow = parseFloat(sum_midy_minus_mody_pow.toFixed(4));
-			sum_y_minus_midy_pow = parseFloat(sum_y_minus_midy_pow.toFixed(4));
-			var correl = parseFloat((Math.abs((sum_midy_minus_mody_pow / sum_y_minus_midy_pow))**(1/2)).toFixed(4));
+			sum_midy_minus_mody_pow = parseFloat(sum_midy_minus_mody_pow.toFixed(selectRound));
+			sum_y_minus_midy_pow = parseFloat(sum_y_minus_midy_pow.toFixed(selectRound));
+			var correl = parseFloat((Math.abs((sum_midy_minus_mody_pow / sum_y_minus_midy_pow))**(1/2)).toFixed(selectRound));
 		}
 
 		//Расчет корреляции для степенного, параболического и гиперболического тренда
@@ -434,28 +437,28 @@ function calc(){
 			var arr_y_minus_mody_pow = [];
 			var sum_y_minus_mody_pow = 0;
 				for(i = 0; i<arry.length; i++){
-					arr_y_minus_mody_pow[i] = parseFloat(((parseFloat(arry[i]) - parseFloat(arrmody[i]))**2).toFixed(4));
+					arr_y_minus_mody_pow[i] = parseFloat(((parseFloat(arry[i]) - parseFloat(arrmody[i]))**2).toFixed(selectRound));
 					sum_y_minus_mody_pow += ((parseFloat(arry[i]) - parseFloat(arrmody[i]))**2);
 				}
 			var arr_y_minus_midy_pow = [];
 			var sum_y_minus_midy_pow = 0;
 				for(i = 0; i<arry.length; i++){
-					arr_y_minus_midy_pow[i] = parseFloat(((parseFloat(arry[i]) - midy)**2).toFixed(4));
+					arr_y_minus_midy_pow[i] = parseFloat(((parseFloat(arry[i]) - midy)**2).toFixed(selectRound));
 					sum_y_minus_midy_pow += ((parseFloat(arry[i]) - midy)**2);
 				}
-			sum_y_minus_mody_pow = parseFloat(sum_y_minus_mody_pow.toFixed(4));	
-			sum_y_minus_midy_pow = parseFloat(sum_y_minus_midy_pow.toFixed(4));
-			var correl = parseFloat((Math.abs((1 - (sum_y_minus_mody_pow / sum_y_minus_midy_pow)))**(1/2)).toFixed(4));
+			sum_y_minus_mody_pow = parseFloat(sum_y_minus_mody_pow.toFixed(selectRound));	
+			sum_y_minus_midy_pow = parseFloat(sum_y_minus_midy_pow.toFixed(selectRound));
+			var correl = parseFloat((Math.abs((1 - (sum_y_minus_mody_pow / sum_y_minus_midy_pow)))**(1/2)).toFixed(selectRound));
 		}	
 
 		//Расчет коэффициента(индекса) детерминации и влияние Y на X
-		var deter = parseFloat((correl**2).toFixed(4));
-		var deter_100 = parseFloat((deter * 100).toFixed(4));
-		var deter_other = parseFloat((100 - deter_100).toFixed(4));
+		var deter = parseFloat((correl**2).toFixed(selectRound));
+		var deter_100 = parseFloat((deter * 100).toFixed(selectRound));
+		var deter_other = parseFloat((100 - deter_100).toFixed(selectRound));
 
 		//Расчет критерия Фишера для линейного, степенного и гиперболического тренда
 		if(selectValue == 0 || selectValue == 1 || selectValue == 3){
-			var fisher = parseFloat(((deter / (1 - deter)) * (n - 2)).toFixed(4));
+			var fisher = parseFloat(((deter / (1 - deter)) * (n - 2)).toFixed(selectRound));
 			var arr_fisher_tabl = ["161.45", "18.51", "10.13", "7.71", "6.61", "5.99", "5.59", "5.32", "5.12", "4.96", "4.84", "4.75", "4.67", "4.60", "4.54", "4.49", "4.45", "4.41", "4.38", "4.35", "4.32", "4.30", "4.28", "4.26", "4.24", "4.22", "4.21", "4.20", "4.18", "4.17"];
 			var fisher_tabl = 0;
 				for(i = 0; i < n-2; i++){
@@ -465,7 +468,7 @@ function calc(){
 
 		//Расчет критерия Фишера для параболического тренда
 		if(selectValue == 2){
-			var fisher = parseFloat(((deter / (1 - deter)) * ((n - 3) / 2)).toFixed(4));
+			var fisher = parseFloat(((deter / (1 - deter)) * ((n - 3) / 2)).toFixed(selectRound));
 			var arr_fisher_tabl = ["199.50", "19", "9.55", "6.94", "5.79", "5.14", "4.74", "4.46", "4.26", "4.10", "3.98", "3.89", "3.81", "3.74", "3.68", "3.63", "3.59", "3.55", "3.52", "3.49", "3.47", "3.44", "3.42", "3.40", "3.38", "3.37", "3.35", "3.34", "3.33", "3.32"];
 			var fisher_tabl = 0;
 				for(i = 0; i < n-3; i++){
@@ -478,7 +481,7 @@ function calc(){
 			for(i = 0; i<arrx.length; i++){
 				err_apr += Math.abs((parseFloat(arry[i]) - parseFloat(arrmody[i])) / parseFloat(arry[i]));
 			}
-		err_apr = parseFloat(((1 / n) * err_apr * 100).toFixed(4));
+		err_apr = parseFloat(((1 / n) * err_apr * 100).toFixed(selectRound));
 
 		//Генерация html
 
@@ -697,5 +700,5 @@ function calc(){
 		}
 		div8.push('</div>');
 		document.getElementById('generate11').innerHTML=div8.join('\n');
-	};
+	}
 }
