@@ -50,7 +50,7 @@ function calc(){
 
 		//Проверка инпутов на заполненность
 		for (i = 0; i < arrx.length; i++){
-			if(isNaN(arrx[i]) || isNaN(arry[i]){
+			if(isNaN(arrx[i]) || isNaN(arry[i])){
 				bool = 1;
 				alert("Необходимо заполнить все ячейки X и Y");
 				break;
