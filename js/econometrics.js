@@ -517,7 +517,7 @@ function calc(){
 			document.getElementById('generate4').innerHTML=table2.join('\n');
 
 			var div3 = ['<div>'];
-			div3.push('<h3>Сосчитаем коэффициент корреляции по формуле:<br><br>R = ∑((Yсред - Ymod)^2) / ∑((Y - Yсред)^2)<br><br>R = '+sum_midy_minus_mody_pow+' / '+sum_y_minus_midy_pow+' = '+correl+'</h3> <h3>Для оценки связи между X и Y воспользуемся таблицей 3:</h3>');
+			div3.push('<h3>Сосчитаем коэффициент корреляции по формуле:<br><br>R = &radic;<span> ∑((Yсред - Ymod)^2) / ∑((Y - Yсред)^2)</span><br><br>R = &radic;<span> '+sum_midy_minus_mody_pow+' / '+sum_y_minus_midy_pow+'</span> = '+correl+'</h3> <h3>Для оценки связи между X и Y воспользуемся таблицей 3:</h3>');
 			div3.push('</div>');
 			document.getElementById('generate5').innerHTML=div3.join('\n');
 		}
