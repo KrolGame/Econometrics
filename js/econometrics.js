@@ -15,10 +15,10 @@ function removetr(){
 
 function calc(){
 	//Получение выбронного тренда через селект
-	var selectValue = document.getElementById('select').options.selectedIndex;
+	var selectValue = document.getElementById('select').value;
 
 	//Получение выбронной степени округления чисел через селект
-	var selectRound = document.getElementById('select-round').value;;
+	var selectRound = document.getElementById('select-round').value;
 
 	inpx = document.getElementsByClassName('x');
 	arrx = fun_arrx();
@@ -245,6 +245,42 @@ function calc(){
 	return sum_multi_lnx_lny;
 	}
 
+	//Записываем массив значений Xi * lnYi
+	function fun_arr_multi_x_lny(){
+		var arr_multi_x_lny = [];
+		for(i = 0; i<arrx.length; i++){
+			arr_multi_x_lny[i] = parseFloat((parseFloat(arrx[i]) * parseFloat(arrlny[i])).toFixed(selectRound));
+		}
+	return arr_multi_x_lny;
+	}
+
+	//Суммируем все значения Xi * lnYi
+	function fun_sum_multi_x_lny(){
+		var sum_multi_x_lny = 0;
+		for(i = 0; i<arrx.length; i++){
+			sum_multi_x_lny += parseFloat(arrx[i]) * parseFloat(arrlny[i]);
+		}
+	return sum_multi_x_lny;
+	}
+
+	//Записываем массив значений lnXi * Yi
+	function fun_arr_multi_lnx_y(){
+		var arr_multi_lnx_y = [];
+		for(i = 0; i<arrx.length; i++){
+			arr_multi_lnx_y[i] = parseFloat((parseFloat(arrlnx[i]) * parseFloat(arry[i])).toFixed(selectRound));
+		}
+	return arr_multi_lnx_y;	
+	}
+
+	//Суммируем все значения lnXi * Yi
+	function fun_sum_multi_lnx_y(){
+		var sum_multi_lnx_y = 0;
+		for(i = 0; i<arrx.length; i++){
+			sum_multi_lnx_y += parseFloat(arrlnx[i]) * parseFloat(arry[i]);
+		}
+	return sum_multi_lnx_y;
+	}
+
 	//Записываем массив значений 1 / x
 	function fun_arr_divis_x(){
 		var arr_divis_x = [];
@@ -353,6 +389,26 @@ function calc(){
 			var sum_divis_y_x = parseFloat((fun_sum_divis_y_x()).toFixed(selectRound));
 		}
 
+		//Расчет значений для экспоненциального тренда
+		if(selectValue == 4){
+			var arrlny = fun_arrlny();
+			var sumlny = parseFloat((fun_sum_arrlny()).toFixed(selectRound));
+			var arr_pow2x = fun_arr_pow2x();
+			var sumpow2x = parseFloat((fun_sum_arr_pow2x()).toFixed(selectRound));
+			var arr_multi_x_lny = fun_arr_multi_x_lny();
+			var sum_multi_x_lny = parseFloat((fun_sum_multi_x_lny()).toFixed(selectRound));
+		}
+
+		//Расчет значений для логарифмического тренда
+		if(selectValue == 5){
+			var arrlnx = fun_arrlnx();
+			var sumlnx = parseFloat((fun_sum_arrlnx()).toFixed(selectRound));
+			var arr_powlnx = fun_arr_powlnx();
+			var sum_powlnx = parseFloat((fun_sum_arr_powlnx()).toFixed(selectRound));
+			var arr_multi_lnx_y = fun_arr_multi_lnx_y();
+			var sum_multi_lnx_y = parseFloat((fun_sum_multi_lnx_y()).toFixed(selectRound));
+		}
+
 		//Нахождение a и b для линейного тренда
 		if(selectValue == 0){
 			var b = parseFloat(((sum_multi_x_y - (sumx * sumy / n)) / (sum_pow2x - (sumx * sumx / n))).toFixed(selectRound));
@@ -381,6 +437,19 @@ function calc(){
 		if(selectValue == 3){
 			var b = parseFloat(((sum_divis_y_x - (sum_divis_x * sumy / n)) / (sum_divis_pow2x - (sum_divis_x * sum_divis_x / n))).toFixed(selectRound));
 			var a = parseFloat(((sumy - (sum_divis_x * b)) / n).toFixed(selectRound));
+		}
+
+		//Нахождение a и b для экспоненциального тренда
+		if(selectValue == 4){
+			var b = parseFloat(((sum_multi_x_lny - (sumx * sumlny / n)) / (sumpow2x - (sumx * sumx / n))).toFixed(selectRound));
+			var a = parseFloat(((sumlny - (sumx * b)) / n).toFixed(selectRound));
+			var a_exp = parseFloat((Math.exp(a)).toFixed(selectRound));
+		}
+
+		//Нахождение a и b для логарифмического тренда
+		if(selectValue == 5){
+			var b = parseFloat(((sum_multi_lnx_y - (sumlnx * sumy / n)) / (sum_powlnx - (sumlnx * sumlnx / n))).toFixed(selectRound));
+			var a = parseFloat(((sumy - (sumlnx * b)) / n).toFixed(selectRound));
 		}
 
 		var arrmody = [];
@@ -413,6 +482,20 @@ function calc(){
 			}
 		}
 
+		//Расчет и запись значений Ymod для экспоненциального тренда
+		if(selectValue == 4){
+			for(i = 0; i<arrx.length; i++){
+				arrmody[i] = parseFloat((a_exp * (Math.exp(b * parseFloat(arrx[i])))).toFixed(selectRound));
+			}
+		}
+
+		//Расчет и запись значений Ymod для логарифмического тренда
+		if(selectValue == 5){
+			for(i = 0; i<arrlnx.length; i++){
+				arrmody[i] = parseFloat((a + (b * parseFloat(arrlnx[i]))).toFixed(selectRound));
+			}
+		}
+
 		//Расчет корреляции для линейного тренда
 		if(selectValue == 0){
 			var arr_midy_minus_mody_pow = [];
@@ -424,7 +507,7 @@ function calc(){
 			var arr_y_minus_midy_pow = [];
 			var sum_y_minus_midy_pow = 0;
 				for(i = 0; i<arry.length; i++){
-					arr_y_minus_midy_pow[i] = parseFloat(((parseFloat(arry[i]) - midy)**2).toFixed(selectRound));
+					arr_y_minus_midy_pow[i] = parseFloat( ((parseFloat(arry[i]) - midy)**2).toFixed(selectRound) );
 					sum_y_minus_midy_pow += ((parseFloat(arry[i]) - midy)**2);
 				}
 			sum_midy_minus_mody_pow = parseFloat(sum_midy_minus_mody_pow.toFixed(selectRound));
@@ -432,8 +515,8 @@ function calc(){
 			var correl = parseFloat((Math.abs((sum_midy_minus_mody_pow / sum_y_minus_midy_pow))**(1/2)).toFixed(selectRound));
 		}
 
-		//Расчет корреляции для степенного, параболического и гиперболического тренда
-		if(selectValue == 1 || selectValue == 2 || selectValue == 3){
+		//Расчет корреляции для степенного, параболического, гиперболического, экспоненциального и логарифмического тренда
+		if(selectValue == 1 || selectValue == 2 || selectValue == 3 || selectValue == 4 || selectValue == 5){
 			var arr_y_minus_mody_pow = [];
 			var sum_y_minus_mody_pow = 0;
 				for(i = 0; i<arry.length; i++){
@@ -456,8 +539,8 @@ function calc(){
 		var deter_100 = parseFloat((deter * 100).toFixed(selectRound));
 		var deter_other = parseFloat((100 - deter_100).toFixed(selectRound));
 
-		//Расчет критерия Фишера для линейного, степенного и гиперболического тренда
-		if(selectValue == 0 || selectValue == 1 || selectValue == 3){
+		//Расчет критерия Фишера для линейного, степенного, гиперболического, экспоненциального и логарифмического тренда
+		if(selectValue == 0 || selectValue == 1 || selectValue == 3 || selectValue == 4 || selectValue == 5){
 			var fisher = parseFloat(((deter / (1 - deter)) * (n - 2)).toFixed(selectRound));
 			var arr_fisher_tabl = ["161.45", "18.51", "10.13", "7.71", "6.61", "5.99", "5.59", "5.32", "5.12", "4.96", "4.84", "4.75", "4.67", "4.60", "4.54", "4.49", "4.45", "4.41", "4.38", "4.35", "4.32", "4.30", "4.28", "4.26", "4.24", "4.22", "4.21", "4.20", "4.18", "4.17"];
 			var fisher_tabl = 0;
@@ -488,31 +571,31 @@ function calc(){
 		//Генерация характерная для линейного тренда
 		if(selectValue == 0){
 			var div1 = ['<div>'];
-			div1.push('<h2>Решение</h2><h3>Линейное уравнение регрессии имеет вид: <br><br> y = b * x + a</h3> <h3>Находим параметры уравнения (a и b) методом наименьших квадратов(МНК)<br><br>Система уравнений МНК:<br><br>a * n + b * ∑X = ∑Y<br>a * ∑X + b * ∑X^2 = ∑(X * Y)</h3> <h3>Для решения системы уравнений построим и сосчитаем значения таблицы 1:</h3>');
+			div1.push('<h2>Решение</h2><h3>Линейное уравнение регрессии имеет вид:<br><br> y = b * x + a</h3><h3>Находим параметры уравнения (a и b) методом наименьших квадратов(МНК)<br><br>Система уравнений МНК:<br><br>a * n + b * ∑X = ∑Y<br>a * ∑X + b * ∑X^2 = ∑(X * Y)</h3><h3>Для решения системы уравнений построим и сосчитаем значения таблицы 1:</h3>');
 			div1.push('</div>');
 			document.getElementById('generate1').innerHTML=div1.join('\n');
 
 			var table1 = ['<table class="generate-table"><h4>Таблица 1<h4>'];
-			table1.push('<tr> <td> </td> <td>X</td> <td>Y</td> <td>X^2</td> <td>X * Y</td> </tr>');
+			table1.push('<tr><td></td><td>X</td><td>Y</td><td>X^2</td><td>X * Y</td></tr>');
 				for (i = 0; i < n; i++){
-					table1.push('<tr> <td>'+(i + 1)+'</td> <td>'+arrx[i]+'</td> <td>'+arry[i]+'</td> <td>'+arr_pow2x[i]+'</td> <td>'+arr_multi_x_y[i]+'</td> </tr>');
+					table1.push('<tr><td>'+(i + 1)+'</td><td>'+arrx[i]+'</td><td>'+arry[i]+'</td><td>'+arr_pow2x[i]+'</td><td>'+arr_multi_x_y[i]+'</td></tr>');
 				}
-			table1.push('<tr> <td>Сумма</td> <td>'+sumx+'</td> <td>'+sumy+'</td> <td>'+sum_pow2x+'</td> <td>'+sum_multi_x_y+'</td> </tr>');
+			table1.push('<tr><td>Сумма</td><td>'+sumx+'</td><td>'+sumy+'</td><td>'+sum_pow2x+'</td><td>'+sum_multi_x_y+'</td></tr>');
 			table1.push('</table>');
 			document.getElementById('generate2').innerHTML=table1.join('\n');
 
 			var div2 = ['<div>'];
-			div2.push('<h3>Теперь система уравнений будет иметь следующий вид: <br><br>a * '+n+' + b * '+sumx+' = '+sumy+'<br>a * '+sumx+' + b * '+sum_pow2x+' = '+sum_multi_x_y+'</h3> <h3>Сосчитаем значения a и b:<br><br>a = '+a+'; b = '+b+'</h3> <h3>Уравнение регрессии будет иметь следующий вид:<br><br>Ymod = '+b+' * X + '+a+'</h3> <h3>Для дальнейшего решения и оценки качества модели построим и сосчитаем значения таблицы 2:</h3>');
+			div2.push('<h3>Теперь система уравнений будет иметь следующий вид:<br><br>a * '+n+' + b * '+sumx+' = '+sumy+'<br>a * '+sumx+' + b * '+sum_pow2x+' = '+sum_multi_x_y+'</h3><h3>Сосчитаем значения a и b:<br><br>a = '+a+'; b = '+b+'</h3><h3>Уравнение регрессии будет иметь следующий вид:<br><br>Ymod = '+b+' * X + '+a+'</h3> <h3>Для дальнейшего решения и оценки качества модели построим и сосчитаем значения таблицы 2:</h3>');
 			div2.push('</div>');
 			document.getElementById('generate3').innerHTML=div2.join('\n');
 
 			var table2 = ['<table class="generate-table"><h4>Таблица 2<h4>'];
-			table2.push('<tr> <td></td> <td>Y</td> <td>Ymod</td> <td>(Yсред - Ymod)^2</td> <td>(Y - Yсред)^2</td> </tr>');
+			table2.push('<tr><td></td><td>Y</td><td>Ymod</td><td>(Yсред - Ymod)^2</td><td>(Y - Yсред)^2</td></tr>');
 				for (i = 0; i < n; i++){
-					table2.push('<tr> <td>'+(i + 1)+'</td> <td>'+arry[i]+'</td> <td>'+arrmody[i]+'</td> <td>'+arr_midy_minus_mody_pow[i]+'</td> <td>'+arr_y_minus_midy_pow[i]+'</td> </tr> ');
+					table2.push('<tr> <td>'+(i + 1)+'</td><td>'+arry[i]+'</td><td>'+arrmody[i]+'</td><td>'+arr_midy_minus_mody_pow[i]+'</td><td>'+arr_y_minus_midy_pow[i]+'</td></tr> ');
 				}
-			table2.push('<tr> <td>Сумма</td> <td>'+sumy+'</td> <td></td> <td>'+sum_midy_minus_mody_pow+'</td> <td>'+sum_y_minus_midy_pow+'</td></tr>');
-			table2.push('<tr> <td>Среднее</td> <td>'+midy+'</td> <td></td> <td></td> <td></td></tr>');
+			table2.push('<tr><td>Сумма</td><td>'+sumy+'</td><td></td><td>'+sum_midy_minus_mody_pow+'</td><td>'+sum_y_minus_midy_pow+'</td></tr>');
+			table2.push('<tr><td>Среднее</td><td>'+midy+'</td><td></td><td></td><td></td></tr>');
 			table2.push('</table>');
 			document.getElementById('generate4').innerHTML=table2.join('\n');
 
@@ -525,117 +608,134 @@ function calc(){
 		//Генерация характерная для степенного тренда
 		if(selectValue == 1){
 			var div1 = ['<div>'];
-			div1.push('<h2>Решение</h2><h3>Степенное уравнение регрессии имеет вид: <br><br> y = a * x^b</h3> <h3>Находим параметры уравнения (a и b) методом наименьших квадратов(МНК)<br><br>Система уравнений МНК:<br><br>lna * n + b * ∑lnX = ∑lnY<br>lna * ∑lnX + b * ∑lnX^2 = ∑(lnX * lnY)</h3> <h3>Для решения системы уравнений построим и сосчитаем значения таблицы 1:</h3>');
+			div1.push('<h2>Решение</h2><h3>Степенное уравнение регрессии имеет вид:<br><br> y = a * x^b</h3><h3>Находим параметры уравнения (a и b) методом наименьших квадратов(МНК)<br><br>Система уравнений МНК:<br><br>lna * n + b * ∑lnX = ∑lnY<br>lna * ∑lnX + b * ∑lnX^2 = ∑(lnX * lnY)</h3><h3>Для решения системы уравнений построим и сосчитаем значения таблицы 1:</h3>');
 			div1.push('</div>');
 			document.getElementById('generate1').innerHTML=div1.join('\n');
 
 			var table1 = ['<table class="generate-table"><h4>Таблица 1<h4>'];
-			table1.push('<tr> <td> </td> <td>lnX</td> <td>lnY</td> <td>lnX^2</td> <td>lnX * lnY</td> </tr>');
+			table1.push('<tr><td></td><td>lnX</td><td>lnY</td><td>lnX^2</td><td>lnX * lnY</td></tr>');
 				for (i = 0; i < n; i++){
-					table1.push('<tr> <td>'+(i + 1)+'</td> <td>'+arrlnx[i]+'</td> <td>'+arrlny[i]+'</td> <td>'+arr_powlnx[i]+'</td> <td>'+arr_multi_lnx_lny[i]+'</td> </tr>');
+					table1.push('<tr><td>'+(i + 1)+'</td><td>'+arrlnx[i]+'</td><td>'+arrlny[i]+'</td><td>'+arr_powlnx[i]+'</td><td>'+arr_multi_lnx_lny[i]+'</td></tr>');
 				}
-			table1.push('<tr> <td>Сумма</td> <td>'+sumlnx+'</td> <td>'+sumlny+'</td> <td>'+sumpowlnx+'</td> <td>'+sum_multi_lnx_lny+'</td> </tr>');
+			table1.push('<tr><td>Сумма</td><td>'+sumlnx+'</td><td>'+sumlny+'</td><td>'+sumpowlnx+'</td><td>'+sum_multi_lnx_lny+'</td></tr>');
 			table1.push('</table>');
 			document.getElementById('generate2').innerHTML=table1.join('\n');
 			
 			var div2 = ['<div>'];
-			div2.push('<h3>Теперь система уравнений будет иметь следующий вид: <br><br>a * '+n+' + b * '+sumlnx+' = '+sumlny+'<br>a * '+sumlnx+' + b * '+sumpowlnx+' = '+sum_multi_lnx_lny+'</h3> <h3>Сосчитаем значения a и b:<br><br>a = '+a+'; b = '+b+'</h3> <h3>Эмпирическое уравнение регрессии будет иметь следующий вид:<br><br>Ymod = e^'+a+' * x^'+b+'<br><br>Избавимся от экспоненты и уравнение примет следующий вид:<br><br>Ymod = '+a_exp+' * x^'+b+'</h3> <h3>Для дальнейшего решения и оценки качества модели построим и сосчитаем значения таблицы 2:</h3>');
+			div2.push('<h3>Теперь система уравнений будет иметь следующий вид:<br><br>a * '+n+' + b * '+sumlnx+' = '+sumlny+'<br>a * '+sumlnx+' + b * '+sumpowlnx+' = '+sum_multi_lnx_lny+'</h3><h3>Сосчитаем значения a и b:<br><br>a = '+a+'; b = '+b+'</h3><h3>Эмпирическое уравнение регрессии будет иметь следующий вид:<br><br>Ymod = e^'+a+' * x^'+b+'<br><br>Избавимся от экспоненты и уравнение примет следующий вид:<br><br>Ymod = '+a_exp+' * x^'+b+'</h3><h3>Для дальнейшего решения и оценки качества модели построим и сосчитаем значения таблицы 2:</h3>');
 			div2.push('</div>');
 			document.getElementById('generate3').innerHTML=div2.join('\n');
-			
-			var table2 = ['<table class="generate-table"><h4>Таблица 2<h4>'];
-			table2.push('<tr> <td></td> <td>Y</td> <td>Ymod</td> <td>(Y-Ymod)^2</td> <td>(Y - Yсред)^2</td> </tr>');
-				for (i = 0; i < n; i++){
-					table2.push('<tr> <td>'+(i + 1)+'</td> <td>'+arry[i]+'</td> <td>'+arrmody[i]+'</td> <td>'+arr_y_minus_mody_pow[i]+'</td> <td>'+arr_y_minus_midy_pow[i]+'</td> </tr> ');
-				}
-			table2.push('<tr> <td>Сумма</td> <td>'+sumy+'</td> <td></td> <td>'+sum_y_minus_mody_pow+'</td> <td>'+sum_y_minus_midy_pow+'</td></tr>');
-			table2.push('<tr> <td>Среднее</td> <td>'+midy+'</td> <td></td> <td></td> <td></td></tr>');
-			table2.push('</table>');
-			document.getElementById('generate4').innerHTML=table2.join('\n');
-			
-			var div3 = ['<div>'];
-			div3.push('<h3>Сосчитаем индекс корреляции по формуле:<br><br>R = &radic;<span> 1 - (∑(Y - Ymod)^2) / ∑(Y - Yсред)^2))</span><br><br>R = &radic;<span> 1 - ('+sum_y_minus_mody_pow+' / '+sum_y_minus_midy_pow+')</span> = '+correl+'</h3> <h3>Для оценки связи между X и Y воспользуемся таблицей 3:</h3>');
-			div3.push('</div>');
-			document.getElementById('generate5').innerHTML=div3.join('\n');
 		}
 
 		//Генерация характерная для параболического тренда
 		if(selectValue == 2){
 			var div1 = ['<div>'];
-			div1.push('<h2>Решение</h2><h3>Параболического уравнение регрессии имеет вид: <br><br> y = a + (b * x) + (c * x^2)</h3> <h3>Находим параметры уравнения (a и b) методом наименьших квадратов(МНК)<br><br>Система уравнений МНК:<br><br>a * n + b * ∑X + c * ∑X^2 = ∑Y<br>a * ∑X + b * ∑X^2 + c * ∑X^3 = ∑(X * Y)<br>a * ∑X^2 + b * ∑X^3 + c * ∑X^4 = ∑(X^2 * Y)</h3> <h3>Для решения системы уравнений построим и сосчитаем значения таблицы 1:</h3>');
+			div1.push('<h2>Решение</h2><h3>Параболического уравнение регрессии имеет вид:<br><br> y = a + (b * x) + (c * x^2)</h3> <h3>Находим параметры уравнения (a и b) методом наименьших квадратов(МНК)<br><br>Система уравнений МНК:<br><br>a * n + b * ∑X + c * ∑X^2 = ∑Y<br>a * ∑X + b * ∑X^2 + c * ∑X^3 = ∑(X * Y)<br>a * ∑X^2 + b * ∑X^3 + c * ∑X^4 = ∑(X^2 * Y)</h3> <h3>Для решения системы уравнений построим и сосчитаем значения таблицы 1:</h3>');
 			div1.push('</div>');
 			document.getElementById('generate1').innerHTML=div1.join('\n');
 			
 			var table1 = ['<table class="generate-table"><h4>Таблица 1<h4>'];
-			table1.push('<tr> <td></td> <td>X</td> <td>Y</td> <td>X^2</td> <td>X^3</td> <td>X^4</td> <td>X * Y</td> <td>X^2 * Y</td> </tr>');
+			table1.push('<tr><td></td><td>X</td><td>Y</td><td>X^2</td><td>X^3</td><td>X^4</td><td>X * Y</td> <td>X^2 * Y</td></tr>');
 				for (i = 0; i < n; i++){
-					table1.push('<tr> <td>'+(i + 1)+'</td> <td>'+arrx[i]+'</td> <td>'+arry[i]+'</td> <td>'+arr_pow2x[i]+'</td> <td>'+arr_pow3x[i]+'</td> <td>'+arr_pow4x[i]+'</td> <td>'+arr_multi_x_y[i]+'</td> <td>'+arr_multi_pow2x_y[i]+'</td> </tr>');
+					table1.push('<tr><td>'+(i + 1)+'</td><td>'+arrx[i]+'</td><td>'+arry[i]+'</td><td>'+arr_pow2x[i]+'</td><td>'+arr_pow3x[i]+'</td><td>'+arr_pow4x[i]+'</td><td>'+arr_multi_x_y[i]+'</td><td>'+arr_multi_pow2x_y[i]+'</td></tr>');
 				}
-			table1.push('<tr> <td>Сумма</td> <td>'+sumx+'</td> <td>'+sumy+'</td> <td>'+sumpow2x+'</td> <td>'+sumpow3x+'</td> <td>'+sumpow4x+'</td> <td>'+sum_multi_x_y+'</td> <td>'+sum_multi_pow2x_y+'</td> </tr>');
+			table1.push('<tr><td>Сумма</td><td>'+sumx+'</td><td>'+sumy+'</td><td>'+sumpow2x+'</td><td>'+sumpow3x+'</td><td>'+sumpow4x+'</td><td>'+sum_multi_x_y+'</td><td>'+sum_multi_pow2x_y+'</td></tr>');
 			table1.push('</table>');
 			document.getElementById('generate2').innerHTML=table1.join('\n');
 			
 			var div2 = ['<div>'];
-			div2.push('<h3>Теперь система уравнений будет иметь следующий вид: <br><br>a * '+n+' + b * '+sumx+' + c * '+sumpow2x+' = '+sumy+'<br>a * '+sumx+' + b * '+sumpow2x+' + c * '+sumpow3x+' = '+sum_multi_x_y+'<br>a * '+sumpow2x+' + b * '+sumpow3x+' + c * '+sumpow4x+' = '+sum_multi_pow2x_y+'</h3> <h3>Для нахождения a, b, c - воспользуемся методом Крамера:<br><br>Для начала сосчитаем делитель Крамера(D), для этого построим матрицу 1:</h3> <h4>Матрица 1</h4><table class="generate-table"><tbody><tr><td>'+n+'</td><td>'+sumx+'</td><td>'+sumpow2x+'</td><td>'+n+'</td><td>'+sumx+'</td></tr><tr><td>'+sumx+'</td><td>'+sumpow2x+'</td><td>'+sumpow3x+'</td><td>'+sumx+'</td><td>'+sumpow2x+'</td></tr><tr><td>'+sumpow2x+'</td><td>'+sumpow3x+'</td><td>'+sumpow4x+'</td><td>'+sumpow2x+'</td><td>'+sumpow3x+'</td></tr></tbody></table><h3>D = ('+n+' * '+sumpow2x+' * '+sumpow4x+') + ('+sumx+' * '+sumpow3x+' * '+sumpow2x+') + ('+sumpow2x+' * '+sumx+' * '+sumpow3x+') - ('+sumpow2x+' * '+sumpow2x+' * '+sumpow2x+') - ('+sumpow3x+' * '+sumpow3x+' * '+n+') - ('+sumpow4x+' * '+sumx+' * '+sumx+') = '+d+'</h3><h3>Теперь сосчитаем 1 числитель Крамера(Da), для этого построим матрицу 2:</h3><h4>Матрица 2</h4><table class="generate-table"><tbody><tr><td>'+sumy+'</td><td>'+sumx+'</td><td>'+sumpow2x+'</td><td>'+sumy+'</td><td>'+sumx+'</td></tr><tr><td>'+sum_multi_x_y+'</td><td>'+sumpow2x+'</td><td>'+sumpow3x+'</td><td>'+sum_multi_x_y+'</td><td>'+sumpow2x+'</td></tr><tr><td>'+sum_multi_pow2x_y+'</td><td>'+sumpow3x+'</td><td>'+sumpow4x+'</td><td>'+sum_multi_pow2x_y+'</td><td>'+sumpow3x+'</td></tr></tbody></table><h3>Da = ('+sumy+' * '+sumpow2x+' * '+sumpow4x+') + ('+sumx+' * '+sumpow3x+' * '+sum_multi_pow2x_y+') + ('+sumpow2x+' * '+sum_multi_x_y+' * '+sumpow3x+') - ('+sum_multi_pow2x_y+' * '+sumpow2x+' * '+sumpow2x+') - ('+sumpow3x+' * '+sumpow3x+' * '+sumy+') - ('+sumpow4x+' * '+sum_multi_x_y+' * '+sumx+') = '+da+'</h3><h3>Теперь сосчитаем 2 числитель Крамера(Db), для этого построим матрицу 3:</h3> <h4>Матрица 3</h4><table class="generate-table"><tbody><tr><td>'+n+'</td><td>'+sumy+'</td><td>'+sumpow2x+'</td><td>'+n+'</td><td>'+sumy+'</td></tr><tr><td>'+sumx+'</td><td>'+sum_multi_x_y+'</td><td>'+sumpow3x+'</td><td>'+sumx+'</td><td>'+sum_multi_x_y+'</td></tr><tr><td>'+sumpow2x+'</td><td>'+sum_multi_pow2x_y+'</td><td>'+sumpow4x+'</td><td>'+sumpow2x+'</td><td>'+sum_multi_pow2x_y+'</td></tr></tbody></table><h3>Db = ('+n+' * '+sum_multi_x_y+' * '+sumpow4x+') + ('+sumy+' * '+sumpow3x+' * '+sumpow2x+') + ('+sumpow2x+' * '+sumx+' * '+sum_multi_pow2x_y+') - ('+sumpow2x+' * '+sum_multi_x_y+' * '+sumpow2x+') - ('+sum_multi_pow2x_y+' * '+sumpow3x+' * '+n+') - ('+sumpow4x+' * '+sumx+' * '+sumy+') = '+db+'</h3><h3>Теперь сосчитаем 3 числитель Крамера(Dc), для этого построим матрицу 4:</h3> <h4>Матрица 4</h4><table class="generate-table"><tbody><tr><td>'+n+'</td><td>'+sumx+'</td><td>'+sumy+'</td><td>'+n+'</td><td>'+sumx+'</td></tr><tr><td>'+sumx+'</td><td>'+sumpow2x+'</td><td>'+sum_multi_x_y+'</td><td>'+sumx+'</td><td>'+sumpow2x+'</td></tr><tr><td>'+sumpow2x+'</td><td>'+sumpow3x+'</td><td>'+sum_multi_pow2x_y+'</td><td>'+sumpow2x+'</td><td>'+sumpow3x+'</td></tr></tbody></table><h3>Dc = ('+n+' * '+sumpow2x+' * '+sum_multi_pow2x_y+') + ('+sumx+' * '+sum_multi_x_y+' * '+sumpow2x+') + ('+sumy+' * '+sumx+' * '+sumpow3x+') - ('+sumpow2x+' * '+sumpow2x+' * '+sumy+') - ('+sumpow3x+' * '+sum_multi_x_y+' * '+n+') - ('+sum_multi_pow2x_y+' * '+sumx+' * '+sumx+') = '+dc+'</h3><h3>Теперь сосчитаем значения a, b, c:<br><br>a = Da / D = '+a+';<br>b = Db / D = '+b+';<br>c = Dc / D = '+c+';</h3><h3>Уравнение регрессии будет иметь следующий вид:<br><br>Ymod = '+a+' + ('+b+' * X) + ('+c+' * X^2)</h3><h3>Для дальнейшего решения и оценки качества модели построим и сосчитаем значения таблицы 2:</h3>');
+			div2.push('<h3>Теперь система уравнений будет иметь следующий вид:<br><br>a * '+n+' + b * '+sumx+' + c * '+sumpow2x+' = '+sumy+'<br>a * '+sumx+' + b * '+sumpow2x+' + c * '+sumpow3x+' = '+sum_multi_x_y+'<br>a * '+sumpow2x+' + b * '+sumpow3x+' + c * '+sumpow4x+' = '+sum_multi_pow2x_y+'</h3><h3>Для нахождения a, b, c - воспользуемся методом Крамера:<br><br>Для начала сосчитаем делитель Крамера(D), для этого построим матрицу 1:</h3><h4>Матрица 1</h4><table class="generate-table"><tbody><tr><td>'+n+'</td><td>'+sumx+'</td><td>'+sumpow2x+'</td><td>'+n+'</td><td>'+sumx+'</td></tr><tr><td>'+sumx+'</td><td>'+sumpow2x+'</td><td>'+sumpow3x+'</td><td>'+sumx+'</td><td>'+sumpow2x+'</td></tr><tr><td>'+sumpow2x+'</td><td>'+sumpow3x+'</td><td>'+sumpow4x+'</td><td>'+sumpow2x+'</td><td>'+sumpow3x+'</td></tr></tbody></table><h3>D = ('+n+' * '+sumpow2x+' * '+sumpow4x+') + ('+sumx+' * '+sumpow3x+' * '+sumpow2x+') + ('+sumpow2x+' * '+sumx+' * '+sumpow3x+') - ('+sumpow2x+' * '+sumpow2x+' * '+sumpow2x+') - ('+sumpow3x+' * '+sumpow3x+' * '+n+') - ('+sumpow4x+' * '+sumx+' * '+sumx+') = '+d+'</h3><h3>Теперь сосчитаем 1 числитель Крамера(Da), для этого построим матрицу 2:</h3><h4>Матрица 2</h4><table class="generate-table"><tbody><tr><td>'+sumy+'</td><td>'+sumx+'</td><td>'+sumpow2x+'</td><td>'+sumy+'</td><td>'+sumx+'</td></tr><tr><td>'+sum_multi_x_y+'</td><td>'+sumpow2x+'</td><td>'+sumpow3x+'</td><td>'+sum_multi_x_y+'</td><td>'+sumpow2x+'</td></tr><tr><td>'+sum_multi_pow2x_y+'</td><td>'+sumpow3x+'</td><td>'+sumpow4x+'</td><td>'+sum_multi_pow2x_y+'</td><td>'+sumpow3x+'</td></tr></tbody></table><h3>Da = ('+sumy+' * '+sumpow2x+' * '+sumpow4x+') + ('+sumx+' * '+sumpow3x+' * '+sum_multi_pow2x_y+') + ('+sumpow2x+' * '+sum_multi_x_y+' * '+sumpow3x+') - ('+sum_multi_pow2x_y+' * '+sumpow2x+' * '+sumpow2x+') - ('+sumpow3x+' * '+sumpow3x+' * '+sumy+') - ('+sumpow4x+' * '+sum_multi_x_y+' * '+sumx+') = '+da+'</h3><h3>Теперь сосчитаем 2 числитель Крамера(Db), для этого построим матрицу 3:</h3> <h4>Матрица 3</h4><table class="generate-table"><tbody><tr><td>'+n+'</td><td>'+sumy+'</td><td>'+sumpow2x+'</td><td>'+n+'</td><td>'+sumy+'</td></tr><tr><td>'+sumx+'</td><td>'+sum_multi_x_y+'</td><td>'+sumpow3x+'</td><td>'+sumx+'</td><td>'+sum_multi_x_y+'</td></tr><tr><td>'+sumpow2x+'</td><td>'+sum_multi_pow2x_y+'</td><td>'+sumpow4x+'</td><td>'+sumpow2x+'</td><td>'+sum_multi_pow2x_y+'</td></tr></tbody></table><h3>Db = ('+n+' * '+sum_multi_x_y+' * '+sumpow4x+') + ('+sumy+' * '+sumpow3x+' * '+sumpow2x+') + ('+sumpow2x+' * '+sumx+' * '+sum_multi_pow2x_y+') - ('+sumpow2x+' * '+sum_multi_x_y+' * '+sumpow2x+') - ('+sum_multi_pow2x_y+' * '+sumpow3x+' * '+n+') - ('+sumpow4x+' * '+sumx+' * '+sumy+') = '+db+'</h3><h3>Теперь сосчитаем 3 числитель Крамера(Dc), для этого построим матрицу 4:</h3> <h4>Матрица 4</h4><table class="generate-table"><tbody><tr><td>'+n+'</td><td>'+sumx+'</td><td>'+sumy+'</td><td>'+n+'</td><td>'+sumx+'</td></tr><tr><td>'+sumx+'</td><td>'+sumpow2x+'</td><td>'+sum_multi_x_y+'</td><td>'+sumx+'</td><td>'+sumpow2x+'</td></tr><tr><td>'+sumpow2x+'</td><td>'+sumpow3x+'</td><td>'+sum_multi_pow2x_y+'</td><td>'+sumpow2x+'</td><td>'+sumpow3x+'</td></tr></tbody></table><h3>Dc = ('+n+' * '+sumpow2x+' * '+sum_multi_pow2x_y+') + ('+sumx+' * '+sum_multi_x_y+' * '+sumpow2x+') + ('+sumy+' * '+sumx+' * '+sumpow3x+') - ('+sumpow2x+' * '+sumpow2x+' * '+sumy+') - ('+sumpow3x+' * '+sum_multi_x_y+' * '+n+') - ('+sum_multi_pow2x_y+' * '+sumx+' * '+sumx+') = '+dc+'</h3><h3>Теперь сосчитаем значения a, b, c:<br><br>a = Da / D = '+a+';<br>b = Db / D = '+b+';<br>c = Dc / D = '+c+';</h3><h3>Уравнение регрессии будет иметь следующий вид:<br><br>Ymod = '+a+' + ('+b+' * X) + ('+c+' * X^2)</h3><h3>Для дальнейшего решения и оценки качества модели построим и сосчитаем значения таблицы 2:</h3>');
 			div2.push('</div>');
 			document.getElementById('generate3').innerHTML=div2.join('\n');
-			
-			var table2 = ['<table class="generate-table"><h4>Таблица 2<h4>'];
-			table2.push('<tr> <td></td> <td>Y</td> <td>Ymod</td> <td>(Y-Ymod)^2</td> <td>(Y - Yсред)^2</td> </tr>');
-				for (i = 0; i < n; i++){
-					table2.push('<tr> <td>'+(i + 1)+'</td> <td>'+arry[i]+'</td> <td>'+arrmody[i]+'</td> <td>'+arr_y_minus_mody_pow[i]+'</td> <td>'+arr_y_minus_midy_pow[i]+'</td> </tr> ');
-				}
-			table2.push('<tr> <td>Сумма</td> <td>'+sumy+'</td> <td></td> <td>'+sum_y_minus_mody_pow+'</td> <td>'+sum_y_minus_midy_pow+'</td></tr>');
-			table2.push('<tr> <td>Среднее</td> <td>'+midy+'</td> <td></td> <td></td> <td></td></tr>');
-			table2.push('</table>');
-			document.getElementById('generate4').innerHTML=table2.join('\n');
-			
-			var div3 = ['<div>'];
-			div3.push('<h3>Сосчитаем индекс корреляции по формуле:<br><br>R = &radic;<span> 1 - (∑(Y - Ymod)^2) / ∑(Y - Yсред)^2))</span><br><br>R = &radic;<span> 1 - ('+sum_y_minus_mody_pow+' / '+sum_y_minus_midy_pow+')</span> = '+correl+'</h3> <h3>Для оценки связи между X и Y воспользуемся таблицей 3:</h3>');
-			div3.push('</div>');
-			document.getElementById('generate5').innerHTML=div3.join('\n');
 		}
 
 		//Генерация характерная для гиперболического тренда
 		if(selectValue == 3){
 			var div1 = ['<div>'];
-			div1.push('<h2>Решение</h2><h3>Гиперболическое уравнение регрессии имеет вид:<br><br>y = a + (b / x)</h3> <h3>Находим параметры уравнения (a и b) методом наименьших квадратов(МНК)<br><br>Система уравнений МНК:<br><br>a * n + b * ∑(1 / X) = ∑Y<br>a * ∑(1 / X) + b * ∑(1 / X^2) = ∑(Y * X)</h3><h3>Для решения системы уравнений построим и сосчитаем значения таблицы 1:</h3>');
+			div1.push('<h2>Решение</h2><h3>Гиперболическое уравнение регрессии имеет вид:<br><br>y = a + (b / x)</h3><h3>Находим параметры уравнения (a и b) методом наименьших квадратов(МНК)<br><br>Система уравнений МНК:<br><br>a * n + b * ∑(1 / X) = ∑Y<br>a * ∑(1 / X) + b * ∑(1 / X^2) = ∑(Y * X)</h3><h3>Для решения системы уравнений построим и сосчитаем значения таблицы 1:</h3>');
 			div1.push('</div>');
 			document.getElementById('generate1').innerHTML=div1.join('\n');
 			
 			var table1 = ['<table class="generate-table"><h4>Таблица 1<h4>'];
-			table1.push('<tr> <td></td> <td>Y</td> <td>1 / X</td><td>1 / X^2</td><td>Y / X</td> </tr>');
+			table1.push('<tr><td></td><td>Y</td><td>1 / X</td><td>1 / X^2</td><td>Y / X</td></tr>');
 				for (i = 0; i < n; i++){
-					table1.push('<tr> <td>'+(i + 1)+'</td> <td>'+arry[i]+'</td> <td>'+arr_divis_x[i]+'</td> <td>'+arr_divis_pow2x[i]+'</td> <td>'+arr_divis_y_x[i]+'</td> </tr>');
+					table1.push('<tr><td>'+(i + 1)+'</td><td>'+arry[i]+'</td><td>'+arr_divis_x[i]+'</td><td>'+arr_divis_pow2x[i]+'</td><td>'+arr_divis_y_x[i]+'</td></tr>');
 				}
-			table1.push('<tr> <td>Сумма</td> <td>'+sumy+'</td> <td>'+sum_divis_x+'</td> <td>'+sum_divis_pow2x+'</td> <td>'+sum_divis_y_x+'</td> </tr>');
+			table1.push('<tr><td>Сумма</td><td>'+sumy+'</td><td>'+sum_divis_x+'</td><td>'+sum_divis_pow2x+'</td><td>'+sum_divis_y_x+'</td></tr>');
 			table1.push('</table>');
 			document.getElementById('generate2').innerHTML=table1.join('\n');
 			
 			var div2 = ['<div>'];
-			div2.push('<h3>Теперь система уравнений будет иметь следующий вид: <br><br>a * '+n+' + b * '+sum_divis_x+' = '+sumy+'<br>a * '+sum_divis_x+' + b * '+sum_divis_pow2x+' = '+sum_divis_y_x+'</h3> <h3>Сосчитаем значения a и b:<br><br>a = '+a+'; b = '+b+'</h3> <h3>Уравнение регрессии будет иметь следующий вид:<br><br>Ymod = '+a+' + ('+b+' / X)</h3><h3>Для дальнейшего решения и оценки качества модели построим и сосчитаем значения таблицы 2:</h3>');
+			div2.push('<h3>Теперь система уравнений будет иметь следующий вид:<br><br>a * '+n+' + b * '+sum_divis_x+' = '+sumy+'<br>a * '+sum_divis_x+' + b * '+sum_divis_pow2x+' = '+sum_divis_y_x+'</h3><h3>Сосчитаем значения a и b:<br><br>a = '+a+'; b = '+b+'</h3><h3>Уравнение регрессии будет иметь следующий вид:<br><br>Ymod = '+a+' + ('+b+' / X)</h3><h3>Для дальнейшего решения и оценки качества модели построим и сосчитаем значения таблицы 2:</h3>');
 			div2.push('</div>');
 			document.getElementById('generate3').innerHTML=div2.join('\n');
-			
-			var table2 = ['<table class="generate-table"><h4>Таблица 2<h4>'];
-			table2.push('<tr><td></td> <td>Y</td> <td>Ymod</td> <td>(Y-Ymod)^2</td> <td>(Y - Yсред)^2</td> </tr>');
+		}
+
+		//Генерация характерная для экспоненциального тренда
+		if(selectValue == 4){
+			var div1 = ['<div>'];
+			div1.push('<h2>Решение</h2><h3>Экспоненциальное уравнение регрессии имеет вид: <br><br> y = a * e^bx</h3><h3>Находим параметры уравнения (a и b) методом наименьших квадратов(МНК)<br><br>Система уравнений МНК:<br><br>lna * n + lnb * ∑X = ∑lnY<br>lna * ∑X + lnb * ∑X^2 = ∑(X * lnY)</h3> <h3>Для решения системы уравнений построим и сосчитаем значения таблицы 1:</h3>');
+			div1.push('</div>');
+			document.getElementById('generate1').innerHTML=div1.join('\n');
+
+			var table1 = ['<table class="generate-table"><h4>Таблица 1<h4>'];
+			table1.push('<tr><td></td><td>X</td><td>lnY</td><td>X^2</td><td>X * lnY</td></tr>');
 				for (i = 0; i < n; i++){
-					table2.push('<tr> <td>'+(i + 1)+'</td> <td>'+arry[i]+'</td> <td>'+arrmody[i]+'</td> <td>'+arr_y_minus_mody_pow[i]+'</td> <td>'+arr_y_minus_midy_pow[i]+'</td> </tr> ');
+					table1.push('<tr><td>'+(i + 1)+'</td><td>'+arrx[i]+'</td><td>'+arrlny[i]+'</td><td>'+arr_pow2x[i]+'</td><td>'+arr_multi_x_lny[i]+'</td></tr>');
 				}
-			table2.push('<tr> <td>Сумма</td> <td>'+sumy+'</td> <td></td> <td>'+sum_y_minus_mody_pow+'</td> <td>'+sum_y_minus_midy_pow+'</td></tr>');
-			table2.push('<tr> <td>Среднее</td> <td>'+midy+'</td> <td></td> <td></td> <td></td></tr>');
+			table1.push('<tr><td>Сумма</td><td>'+sumx+'</td><td>'+sumlny+'</td><td>'+sumpow2x+'</td><td>'+sum_multi_x_lny+'</td></tr>');
+			table1.push('</table>');
+			document.getElementById('generate2').innerHTML=table1.join('\n');
+			
+			var div2 = ['<div>'];
+			div2.push('<h3>Теперь система уравнений будет иметь следующий вид:<br><br>a * '+n+' + b * '+sumx+' = '+sumlny+'<br>a * '+sumx+' + b * '+sumpow2x+' = '+sum_multi_x_lny+'</h3><h3>Сосчитаем значения a и b:<br><br>a = '+a+'; b = '+b+'</h3><h3>Эмпирическое уравнение регрессии будет иметь следующий вид:<br><br>Ymod = e^'+a+' * e^('+b+' * X)<br><br>Избавимся от экспоненты и уравнение примет следующий вид:<br><br>Ymod = '+a_exp+' * e^('+b+' * X)</h3> <h3>Для дальнейшего решения и оценки качества модели построим и сосчитаем значения таблицы 2:</h3>');
+			div2.push('</div>');
+			document.getElementById('generate3').innerHTML=div2.join('\n');
+		}
+
+		//Генерация характерная для логарифмического тренда
+		if(selectValue == 5){
+			var div1 = ['<div>'];
+			div1.push('<h2>Решение</h2><h3>Логарифмическое уравнение регрессии имеет вид:<br><br>y = a + (b * lnX)</h3><h3>Находим параметры уравнения (a и b) методом наименьших квадратов(МНК)<br><br>Система уравнений МНК:<br><br>a * n + b * ∑lnX = ∑Y<br>a * ∑lnX + b * ∑ln(X^2) = ∑(Y * lnX)</h3><h3>Для решения системы уравнений построим и сосчитаем значения таблицы 1:</h3>');
+			div1.push('</div>');
+			document.getElementById('generate1').innerHTML=div1.join('\n');
+			
+			var table1 = ['<table class="generate-table"><h4>Таблица 1<h4>'];
+			table1.push('<tr><td></td><td>Y</td><td>lnX</td><td>ln(X^2)</td><td>Y * lnX</td></tr>');
+				for (i = 0; i < n; i++){
+					table1.push('<tr><td>'+(i + 1)+'</td><td>'+arry[i]+'</td><td>'+arrlnx[i]+'</td><td>'+arr_powlnx[i]+'</td><td>'+arr_multi_lnx_y[i]+'</td></tr>');
+				}
+			table1.push('<tr><td>Сумма</td><td>'+sumy+'</td><td>'+sumlnx+'</td><td>'+sum_powlnx+'</td><td>'+sum_multi_lnx_y+'</td></tr>');
+			table1.push('</table>');
+			document.getElementById('generate2').innerHTML=table1.join('\n');
+			
+			var div2 = ['<div>'];
+			div2.push('<h3>Теперь система уравнений будет иметь следующий вид: <br><br>a * '+n+' + b * '+sumlnx+' = '+sumy+'<br>a * '+sumlnx+' + b * '+sum_powlnx+' = '+sum_multi_lnx_y+'</h3><h3>Сосчитаем значения a и b:<br><br>a = '+a+'; b = '+b+'</h3><h3>Уравнение регрессии будет иметь следующий вид:<br><br>Ymod = '+a+' + ('+b+' * lnX)</h3><h3>Для дальнейшего решения и оценки качества модели построим и сосчитаем значения таблицы 2:</h3>');
+			div2.push('</div>');
+			document.getElementById('generate3').innerHTML=div2.join('\n');
+		}
+
+		//Общая генерация для степенного, параболического, гиперболического, экспоненциального и логарифмического тренда
+		if(selectValue == 1 || selectValue == 2 || selectValue == 3 || selectValue == 4 || selectValue == 5){
+			var table2 = ['<table class="generate-table"><h4>Таблица 2<h4>'];
+			table2.push('<tr><td></td><td>Y</td><td>Ymod</td><td>(Y-Ymod)^2</td><td>(Y - Yсред)^2</td></tr>');
+				for (i = 0; i < n; i++){
+					table2.push('<tr><td>'+(i + 1)+'</td><td>'+arry[i]+'</td><td>'+arrmody[i]+'</td><td>'+arr_y_minus_mody_pow[i]+'</td><td>'+arr_y_minus_midy_pow[i]+'</td></tr> ');
+				}
+			table2.push('<tr><td>Сумма</td><td>'+sumy+'</td> <td></td><td>'+sum_y_minus_mody_pow+'</td><td>'+sum_y_minus_midy_pow+'</td></tr>');
+			table2.push('<tr><td>Среднее</td><td>'+midy+'</td><td></td><td></td><td></td></tr>');
 			table2.push('</table>');
 			document.getElementById('generate4').innerHTML=table2.join('\n');
-
+			
 			var div3 = ['<div>'];
 			div3.push('<h3>Сосчитаем индекс корреляции по формуле:<br><br>R = &radic;<span> 1 - (∑(Y - Ymod)^2) / ∑(Y - Yсред)^2))</span><br><br>R = &radic;<span> 1 - ('+sum_y_minus_mody_pow+' / '+sum_y_minus_midy_pow+')</span> = '+correl+'</h3> <h3>Для оценки связи между X и Y воспользуемся таблицей 3:</h3>');
 			div3.push('</div>');
 			document.getElementById('generate5').innerHTML=div3.join('\n');
-		}
+		}		
 
 		//Общая генерация
 		var table3 = ['<table class="generate-table"><h4>Таблица 3<h4>'];
-		table3.push('<tr><td>R = 0</td> <td>Связь отсутствует</td></tr> <tr><td>0 < R < 0.2</td> <td>Очень слабая связь</td></tr> <tr><td>0.2 < R < 0.3</td> <td>Слабая связь</td></tr> <tr><td>0.3 < R < 0.5</td> <td>Умеренная связь</td></tr> <tr><td>0.5 < R < 0.7</td> <td>Средняя связь</td></tr> <tr><td>0.7 < R < 0.9</td> <td>Сильная связь</td></tr> <tr><td>0.9 < R < 1</td> <td>Очень сильная связь</td></tr> <tr><td>R = 1</td> <td>Функциональная связь</td></tr>');
+		table3.push('<tr><td>R = 0</td><td>Связь отсутствует</td></tr><tr><td>0 < R < 0.2</td><td>Очень слабая связь</td></tr><tr><td>0.2 < R < 0.3</td><td>Слабая связь</td></tr><tr><td>0.3 < R < 0.5</td><td>Умеренная связь</td></tr><tr><td>0.5 < R < 0.7</td><td>Средняя связь</td></tr><tr><td>0.7 < R < 0.9</td><td>Сильная связь</td></tr><tr><td>0.9 < R < 1</td><td>Очень сильная связь</td></tr><tr><td>R = 1</td><td>Функциональная связь</td></tr>');
 		table3.push('</table>');
 		document.getElementById('generate6').innerHTML=table3.join('\n');
 
