@@ -48,15 +48,15 @@
 			<button class="button-addtr" onclick="addtr()" type="submit">+</button>
 		</div>
 		<div class="select-trend">
-			<h2 tabindex="0">Выберите вид тренда</h2>
+			<h2 tabindex="0">Выберите вид регрессии</h2>
 			<select id="select">
-				<option value="0">Линейный y = a + (b * x)</option>
-				<option value="1">Степенной y = a * x^b</option>
-				<option value="2">Параболический  y = a + (b * x) + (c * x^2)</option>
-				<option value="3">Гиперболический y = a + (b / x)</option>
-				<option value="4">Экспоненциальный y = a * e^bx</option>
-				<option value="5">Логарифмический y = a + b * ln(x)</option>
-				<option value="6">Показательный y = a + b^x</option>
+				<option value="0">Линейная: y = a + (b * x)</option>
+				<option value="1">Степенная: y = a * x^b</option>
+				<option value="2">Параболическая:  y = a + (b * x) + (c * x^2)</option>
+				<option value="3">Гиперболическая: y = a + (b / x)</option>
+				<option value="4">Экспоненциальная: y = a * e^bx</option>
+				<option value="5">Логарифмическая: y = a + b * ln(x)</option>
+				<option value="6">Показательная: y = a + b^x</option>
 			</select>
 		</div>
 		<div class="select-trend">
@@ -69,7 +69,8 @@
 			</select>
 		</div>
 		<div class="calc">
-			<button class="button-calc" onclick="calc()" type="submit">Рассчитать</button>
+			<button class="button-calc" onclick="calc()" type="submit">Решение</button>
+			<button class="button-ggs" onclick="ggs()" type="submit">Гугл таблица</button>
 		</div>
 		<div class="generate" id="generate1"></div>
 		<div class="generate" id="generate2"></div>
@@ -84,5 +85,6 @@
 		<div class="generate" id="generate11"></div>
 	</main>
 <script src="js/econometrics.js"></script>
+<script src="js/econometrics-ggs.js"></script>
 </body>
 </html>
