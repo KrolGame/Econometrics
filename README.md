@@ -20,7 +20,7 @@ The calculator may contain errors!
 In the plans:
 1) Implement other types of trend calculation;&#9989;
 2) Improve the quality of the code);&#10062;
-3) Generation of google tables;&#9989;
+3) Generation of google sheets;&#9989;
 4) English language support (google translate &#9989;).&#10062;
 
 You can test it here: https://krolgame.github.io/Econometrics/html/en/
