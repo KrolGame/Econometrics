@@ -1,7 +1,7 @@
-*[English language (google translate)](#english-language)
-*[Русский язык](#русский-язык)
+* [English language (google translate)](#english-language)
+* [Русский язык](#русский-язык)
 
-#English language (google translate)
+# English language (google translate)
 
 Calculator for calculating the regression equation and assessing its qualities:
 1) Coefficient (index) of correlation;
@@ -23,7 +23,7 @@ In the plans:
 3) Generation of google tables;&#9989;
 4) English language support (google translate &#9989).&#10062;
 
-#Русский язык
+# Русский язык
 
 Калькулятор для расчета уравнения регрессии и оценки его качеств:
 1) Коэффициент(индекс) корреляции;
