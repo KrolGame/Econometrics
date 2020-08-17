@@ -23,7 +23,7 @@ In the plans:
 3) Generation of google sheets;&#9989;
 4) English language support (google translate &#9989;).&#10062;
 
-You can test it here: https://krolgame.github.io/Econometrics/html/en/
+You can test it here: https://krolgame.github.io/Econometrics.js/html/en/
 
 # Русский язык
 
@@ -47,4 +47,4 @@ You can test it here: https://krolgame.github.io/Econometrics/html/en/
 3) Генерация гугл таблицы;&#9989;
 4) Поддержка английского языка(google translate &#9989;).&#10062;
 
-Протестировать можно тут: https://krolgame.github.io/Econometrics/html/ru/
+Протестировать можно тут: https://krolgame.github.io/Econometrics.js/html/ru/
