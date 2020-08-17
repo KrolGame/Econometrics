@@ -1,5 +1,5 @@
-[English language (google translate)](#english-language)
-[Русский язык](#русский-язык)
+*[English language (google translate)](#english-language)
+*[Русский язык](#русский-язык)
 
 #English language (google translate)
 
