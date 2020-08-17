@@ -23,6 +23,8 @@ In the plans:
 3) Generation of google tables;&#9989;
 4) English language support (google translate &#9989).&#10062;
 
+You can test it here: https://krolgame.github.io/Econometrics/html/en/
+
 # Русский язык
 
 Калькулятор для расчета уравнения регрессии и оценки его качеств:
