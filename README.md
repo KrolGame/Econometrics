@@ -21,7 +21,7 @@ In the plans:
 1) Implement other types of trend calculation;&#9989;
 2) Improve the quality of the code);&#10062;
 3) Generation of google tables;&#9989;
-4) English language support (google translate &#9989).&#10062;
+4) English language support (google translate &#9989;).&#10062;
 
 You can test it here: https://krolgame.github.io/Econometrics/html/en/
 
@@ -45,6 +45,6 @@ You can test it here: https://krolgame.github.io/Econometrics/html/en/
 1) Реализовать остальные виды расчета трендов;&#9989;
 2) Улучшить качество кода);&#10062;
 3) Генерация гугл таблицы;&#9989;
-4) Поддержка английского языка(google translate&#9989).&#10062;
+4) Поддержка английского языка(google translate &#9989;).&#10062;
 
 Протестировать можно тут: https://krolgame.github.io/Econometrics/html/ru/
