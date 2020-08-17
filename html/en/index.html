@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Econometrics</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="../../FaviconAnimeKG.png" type="image/x-png"/>
+	<link rel="shortcut icon" href="../../FaviconAnimeKG.png" type="image/x-png"/>
+	<link rel="stylesheet" type="text/css" href="../../css/econometrics.css?v=1.6">
+</head>
+<body>
+	<main>
+		<h1 tabindex="0">Econometrics</h1>
+		<table id="table">
+			<tbody id="tbody">
+				<tr>
+					<td>X</td>
+					<td>Y</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="number" class="x">
+					</td>
+					<td>
+						<input type="number" class="y">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="number" class="x">
+					</td>
+					<td>
+						<input type="number" class="y">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="number" class="x">
+					</td>
+					<td>
+						<input type="number" class="y">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="buttons">
+			<button class="button-removetr" onclick="removetr()" type="submit">-</button>
+			<button class="button-addtr" onclick="addtr()" type="submit">+</button>
+		</div>
+		<div class="select-trend">
+			<h2 tabindex="0">Select the type of regression</h2>
+			<select id="select">
+				<option value="0">Linear: y = a + (b * x)</option>
+				<option value="1">Power: y = a * x^b</option>
+				<option value="2">Parabolic:  y = a + (b * x) + (c * x^2)</option>
+				<option value="3">Hyperbolic: y = a + (b / x)</option>
+				<option value="4">Exponential: y = a * e^bx</option>
+				<option value="5">Logarithmic: y = a + b * ln(x)</option>
+				<option value="6">Exponential: y = a + b^x</option>
+			</select>
+		</div>
+		<div class="select-trend">
+			<h2 tabindex="0">Select the number of digits after the decimal point</h2>
+			<select id="select-round">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+			</select>
+		</div>
+		<div class="calc">
+			<button class="button-calc" onclick="calc()" type="submit">Solution</button>
+			<button class="button-ggs" onclick="ggs()" type="submit">Google Sheets</button>
+		</div>
+		<div class="generate" id="generate1"></div>
+		<div class="generate" id="generate2"></div>
+		<div class="generate" id="generate3"></div>
+		<div class="generate" id="generate4"></div>
+		<div class="generate" id="generate5"></div>
+		<div class="generate" id="generate6"></div>
+		<div class="generate" id="generate7"></div>
+		<div class="generate" id="generate8"></div>
+		<div class="generate" id="generate9"></div>
+		<div class="generate" id="generate10"></div>
+		<div class="generate" id="generate11"></div>
+	</main>
+<script src="../../js/min/econometrics-EN-min.js"></script>
+<script src="../../js/min/econometrics-ggs-EN-min.js"></script>
+</body>
+</html>
