@@ -18,7 +18,7 @@ Significance level = 0.05!
 The calculator may contain errors!
 
 In the plans:
-1) Implement other types of trend calculation;&#9989;
+1) Implement other types of regression calculation;&#9989;
 2) Improve the quality of the code);&#10062;
 3) Generation of google sheets;&#9989;
 4) English language support (google translate &#9989;).&#10062;
@@ -42,7 +42,7 @@ You can test it here: https://krolgame.github.io/Econometrics/html/en/
 Калькулятор может содержать ошибки!
 
 В планах:
-1) Реализовать остальные виды расчета трендов;&#9989;
+1) Реализовать остальные виды расчета регресий;&#9989;
 2) Улучшить качество кода);&#10062;
 3) Генерация гугл таблицы;&#9989;
 4) Поддержка английского языка(google translate &#9989;).&#10062;
